@@ -1,0 +1,33 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "Hello world!!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./apiGateway.js",
+    "dev": "nodemon ./apiGateway.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iheb-Letaief/microServices.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iheb-Letaief/microServices/issues"
+  },
+  "homepage": "https://github.com/Iheb-Letaief/microServices#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "mongoose": "^7.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
