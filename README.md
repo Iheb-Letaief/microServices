@@ -2,6 +2,8 @@
 
 Welcome to the Project Management API documentation! This API allows users to manage projects and clients, providing endpoints for various operations such as registering users, logging in, adding clients, retrieving project details, and more.
 
+To explore the API and its capabilities, please refer to the [API Documentation](https://documenter.getpostman.com/view/20890518/2s93m4Y3XV). The documentation provides detailed information about each API endpoint, including the request structure, required parameters, and example responses.
+
 ## Authentication
 
 The API requires authentication for most endpoints. Users can register and log in to obtain an access token, which should be included in the `Authorization` header as a Bearer Token for subsequent requests. Please refer to the API documentation for the specific authentication process.
