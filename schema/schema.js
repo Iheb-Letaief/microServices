@@ -1,5 +1,6 @@
 const Project = require("../models/Project");
 const Client = require("../models/Client");
+const {protect} = require("../auth/middleware/authmiddleware")
 
 const {
   GraphQLObjectType,
@@ -205,6 +206,8 @@ const mutation = new GraphQLObjectType({
     },
   },
 });
+
+
 
 module.exports = new GraphQLSchema({
   query: RootQuery,

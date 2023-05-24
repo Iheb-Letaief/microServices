@@ -19,11 +19,17 @@
   },
   "homepage": "https://github.com/Iheb-Letaief/microServices#readme",
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.14",
+    "@grpc/proto-loader": "^0.7.7",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "express-graphql": "^0.12.0",
     "graphql": "^15.8.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.1"
   },
   "devDependencies": {
