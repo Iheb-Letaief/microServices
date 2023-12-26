@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    triggers {
+        pollSCM('*/5 * * * *') 
+    }
+
+    stages {
+        stage('Init') {
+            steps {
+                sh 'echo "Initializing variables..."'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "Build project"'
+                sh 'docker build -t microServices .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './mvnw test'
+            }
+        }
+        stage('Push') {
+            steps {
+                sh 'docker push microServices'
+            }
+        }
+        stage('Clean') {
+            steps {
+                sh 'docker rmi microServices'
+            }
+        }
+    }
+}
