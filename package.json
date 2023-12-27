@@ -19,8 +19,6 @@
   },
   "homepage": "https://github.com/Iheb-Letaief/microServices#readme",
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.14",
-    "@grpc/proto-loader": "^0.7.7",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

@@ -12,18 +12,17 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'echo "Build project"'
-                sh 'docker build -t microServices .'
+                sh 'docker build -t microservices-image .'
             }
         }
         stage('Test') {
             steps {
-                sh './mvnw test'
+                sh 'npm test'
             }
         }
-        stage('Push') {
+        stage('Deploy') {
             steps {
-                sh 'docker push microServices'
+                //sh 'docker push microServices'
             }
         }
         stage('Clean') {
