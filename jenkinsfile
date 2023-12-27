@@ -20,11 +20,7 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
-            steps {
-                //sh 'docker push microServices'
-            }
-        }
+        
         stage('Clean') {
             steps {
                 sh 'docker rmi microServices'
