@@ -3,9 +3,7 @@ pipeline{
     triggers {
         pollSCM('*/5 * * * *') 
     }
-    tools{
-        nodejs "node"
-    }
+    
     environment {
         // Initialize global variables here
         APP_NAME="microsevices"
