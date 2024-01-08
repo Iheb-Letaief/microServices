@@ -1,30 +1,83 @@
-pipeline {
+pipeline{
     agent any
     triggers {
         pollSCM('*/5 * * * *') 
     }
-
-    stages {
-        stage('Init') {
-            steps {
-                sh 'echo "Initializing variables..."'
+    tools{
+        nodejs "node"
+    }
+    environment {
+        // Initialize global variables here
+        APP_NAME="microsevices"
+        DOCKER_USER = "ihebletaief"
+        DOCKER_PASS="gHCKA9vp!"
+        IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
+        IMAGE_TAG = '1.0'   
+    }
+    stages{
+        stage("Initialization"){
+            steps{
+                script {
+                    // Initialize global variables or perform other setup tasks
+                    ENV_VAR_1 = 'value1'
+                    ENV_VAR_2 = 'value2'
+                }
             }
         }
-        stage('Build') {
-            steps {
-                sh 'docker build -t microservices-image .'
+        stage("Cleanup Workspace"){
+            steps{
+                cleanWs()
             }
         }
-        stage('Test') {
-            steps {
-                sh 'npm test'
+        stage("Checkout from SCM"){
+            steps{
+                git branch: 'main', credentialsId:'github', url:'https://github.com/Iheb-Letaief/microServices.git'
             }
         }
         
-        stage('Clean') {
-            steps {
-                sh 'docker rmi microServices'
+        stage("Test Application"){
+            steps{
+                sh "npm test"
             }
         }
+
+        stage("Push to Registry"){
+            steps{
+                script{
+                    docker.withRegistry('',DOCKER_PASS){
+                        docker_image=docker.build"${IMAGE_NAME}"
+                    }
+                    docker.withRegistry('',DOCKER_PASS){
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
+                }
+            }
+        }
+       
+     stage('DeployToProduction') {
+            steps {
+                kubeconfig(caCertificate: 'MIIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5pa3ViZUNBMB4XDTI0MDEwNzAwMTczNVoXDTM0MDEwNTAwMTczNVowFTETMBEGA1UEAxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALnWL1yJaK9jNdCgyfxhOU9Jv0E4zkt5vEVjeDwFTM5ghhohAMvN9ZCWg+zkuktjQSISp3xMM7Ef9WkWRwRzgvPIBqY4CVHS6XtVBUXlC2H4hgzMw8Kb+GEU1Od8qT0nXllhQJxNs8hcWAjmhshDgNf4l7lx+NlhhEq5p7uEMcdT98D3xAl8txuqjdxegp+oX/G3bZAYbw5uks4dlAi70p3sRiu2rBnSWNbB5nDR7tOC2TnjEAVSCek1oPYW2vrSC9e00g+qg39Egmdr/bTAiOz2g+2jkodctBXsNrj7l+SUB6QBjr+ofq4rsoQfF6qlB4gk5YxpEezrwMDz4KdA6jECAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTwsRWzvwYmThiE/RPVYdGknfmkrDANBgkqhkiG9w0BAQsFAAOCAQEABF6QVfVk+JWhLQtUxORMAxuGnR549ZeS1PSOEChsmwTK+gw6+bUZLtgpioI/kBljO8JCK+A14tjl3//fELFVCe/X9+T82t4JndMBOIy695TN8LSlDBZPBMeapf+CJCZSgVKiI1K4U433OOntIh0AT0wJ2EWjHsv+zAoz9lM9id40cTde/TZYNzB4CJnLWvmFhzMkBOhY9g2qBCnV4N0ek/W2v9G6WVw4Ova7AfbJxKOLIRk73rwgIVK9aZlRQ7xlHRE9njfX88PS22dlmEQqGMwtbniVYxLv81ztwwRunOkikEepm2U7NEBJ6cy+zD1u+pMlyUAjxnYXduJSFQnC/w==', credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
+                 sh 'kubectl apply -f configmap-a.yaml'
+                 sh 'kubectl apply -f deployment-a.yaml'
+                 sh 'kubectl rollout restart deployment todo-mi'
+}
+            }
+        }
+ stage('Cleanup Artifacts') {
+    steps {
+        script {
+            // Supprimer l'image avec la balise spécifiée
+            sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+            
+            // Supprimer l'image 'latest'
+            sh "docker rmi ${IMAGE_NAME}:latest"
+        }
     }
+}
+
+
+     }
+     
+    
 }
