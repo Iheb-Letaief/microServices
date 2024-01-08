@@ -8,7 +8,7 @@ pipeline{
         // Initialize global variables here
         APP_NAME="microsevices"
         DOCKER_USER = "ihebletaief"
-        DOCKER_PASS="gHCKA9vp!"
+        DOCKER_PASS="dockerhub"
         IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
         IMAGE_TAG = '1.0'   
     }
