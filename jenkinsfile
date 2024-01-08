@@ -6,7 +6,7 @@ pipeline{
     
     environment {
         // Initialize global variables here
-        APP_NAME="microsevices"
+        APP_NAME="microapp"
         DOCKER_USER = "ihebletaief"
         DOCKER_PASS="dockerhub"
         IMAGE_NAME="${DOCKER_USER}"+"/"+"${APP_NAME}"
