@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./apiGateway.js",
-    "dev": "nodemon ./apiGateway.js"
+    "dev": "nodemon ./apiGateway.js",
+    "test": "node ./test/sample-test.js"
   },
   "repository": {
     "type": "git",
